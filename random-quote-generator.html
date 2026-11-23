@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Quote Generator</title>
+
+  <style>
+    /* ---------- CSS: design of the page ---------- */
+    :root {
+      --bg: #e9eef3;
+      --ink: #1b2733;
+      --muted: #55667a;
+      --accent: #0f6e6e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: #ffffff;
+      padding: 40px 32px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(27, 39, 51, 0.12);
+    }
+
+    #quote-text {
+      font-size: 1.6rem;
+      line-height: 1.5;
+      margin: 0 0 20px;
+      min-height: 6em;
+    }
+
+    #quote-author {
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0 0 32px;
+    }
+
+    button {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-family: inherit;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.12); }
+  </style>
+</head>
+
+<body>
+  <!-- ---------- HTML: structure of the page ---------- -->
+  <main class="card">
+    <p id="quote-text"></p>
+    <p id="quote-author"></p>
+    <button id="new-quote-btn">New Quote</button>
+  </main>
+
+  <script>
+    /* ---------- JavaScript: logic of the app ---------- */
+
+    // 1. Array of quote objects (text + author)
+    const quotes = [
+      { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+      { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+      { text: "It always seems impossible until it’s done.", author: "Nelson Mandela" },
+      { text: "Whether you think you can, or you think you can’t, you’re right.", author: "Henry Ford" },
+      { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+      { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
+      { text: "Dream is not that which you see while sleeping, it is that which does not let you sleep.", author: "A. P. J. Abdul Kalam" },
+      { text: "Well done is better than well said.", author: "Benjamin Franklin" }
+    ];
+
+    // 2. Get HTML elements
+    const quoteText = document.getElementById("quote-text");
+    const quoteAuthor = document.getElementById("quote-author");
+    const newQuoteBtn = document.getElementById("new-quote-btn");
+
+    // 3. Remember last quote so it is not repeated
+    let lastIndex = -1;
+
+    // 4. Pick a random quote and show it
+    function showRandomQuote() {
+      let index;
+      do {
+        index = Math.floor(Math.random() * quotes.length);
+      } while (index === lastIndex);
+
+      lastIndex = index;
+      quoteText.textContent = "“" + quotes[index].text + "”";
+      quoteAuthor.textContent = "— " + quotes[index].author;
+    }
+
+    // 5. Show a quote when the app opens
+    showRandomQuote();
+
+    // 6. Show a new quote on every button click
+    newQuoteBtn.addEventListener("click", showRandomQuote);
+  </script>
+</body>
+</html>
